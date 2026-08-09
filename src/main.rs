@@ -30,6 +30,9 @@ fn main() {
         for capture in m.captures {
             let capture_name = &query.capture_names()[capture.index as usize];
             let text = capture.node.utf8_text(src.as_bytes()).unwrap();
+
+            let func_def_range = capture.node.range();
+
             match &capture_name[..] {
                 "function" => name = text,
                 "func_body" => body = text,
@@ -37,7 +40,8 @@ fn main() {
             }
 
             if !name.is_empty() && !body.is_empty() {
-                println!("Captured function {} with body:\n{}\n", name, body);
+                println!("Captured function {} from start: {} and end: {} with body:\n{}\n", name,
+                    func_def_range.start_point, func_def_range.end_point, body);
             }
         }
     }

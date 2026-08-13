@@ -6,3 +6,4 @@ edition = "2024"
 [dependencies]
 tree-sitter = "0.26.11"
 tree-sitter-c = "0.24.2"
+walkdir = "2.5.0"

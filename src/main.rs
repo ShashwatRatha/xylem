@@ -1,4 +1,6 @@
-use tree_sitter::{Node, Parser, Query, QueryCursor, StreamingIterator};
+use tree_sitter::{Node, Parser, Query,
+    QueryCursor, StreamingIterator};
+use walkdir::WalkDir;
 
 fn main() {
     let mut c_parser = Parser::new();
@@ -8,9 +10,6 @@ fn main() {
         .set_language(&language)
         .expect("Failed loading C lang");
 
-    let src = std::fs::read_to_string("src/main.c").expect("Error opening C file");
-    let tree = c_parser.parse(&src, None).unwrap();
-
     let query_str = "
     (call_expression
         function: [
@@ -19,25 +18,35 @@ fn main() {
         ])
     ";
 
-    let query = Query::new(&language, query_str).unwrap();
-    let mut cursor = QueryCursor::new();
+    let dir = WalkDir::new(".").into_iter().filter_map(|e| e.ok());
+    for entry in dir {
+        if let name = entry.path().display().to_string()
+            && !name.starts_with("./.")
+                && !name.starts_with("./target")
+                && name.ends_with(".c") {
+                    let src = std::fs::read_to_string(name).expect("Error opening C file");
+                    let tree = c_parser.parse(&src, None).unwrap();
+                    let query = Query::new(&language, query_str).unwrap();
+                    let mut cursor = QueryCursor::new();
 
-    let mut matches = cursor.matches(&query, tree.root_node(), src.as_bytes());
+                    let mut matches = cursor.matches(&query, tree.root_node(), src.as_bytes());
 
-    while let Some(m) = matches.next() {
-        for capture in m.captures {
-            let capture_name = &query.capture_names()[capture.index as usize];
-            if *capture_name == "callee" 
-                && let Ok(callee) = capture.node.utf8_text(src.as_bytes()) {
-                    // Safely handle calls outside functions
-                    if let Some(enclosing_fn) = find_enclosing_fn(capture.node) 
-                        && let Some(caller_name) = find_caller_name(enclosing_fn, src.as_bytes()) {
-                            println!("{caller_name} [Range: {} - {}] called: {callee}",
-                                enclosing_fn.range().start_point, enclosing_fn.range().end_point);
+                    while let Some(m) = matches.next() {
+                        for capture in m.captures {
+                            let capture_name = &query.capture_names()[capture.index as usize];
+                            if *capture_name == "callee" 
+                                && let Ok(callee) = capture.node.utf8_text(src.as_bytes()) {
+                                    // Safely handle calls outside functions
+                                    if let Some(enclosing_fn) = find_enclosing_fn(capture.node) 
+                                        && let Some(caller_name) = find_caller_name(enclosing_fn, src.as_bytes()) {
+                                            println!("{caller_name} [Range: {} - {}] called: {callee}",
+                                                enclosing_fn.range().start_point, enclosing_fn.range().end_point);
+                                    }
+
+                                }
+                        }
                     }
-
                 }
-        }
     }
 }
 

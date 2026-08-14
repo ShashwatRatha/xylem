@@ -1,3 +1,5 @@
+use std::collections::HashMap;
+
 use tree_sitter::{Node, Parser, Query,
     QueryCursor, StreamingIterator};
 use walkdir::WalkDir;
@@ -31,20 +33,30 @@ fn main() {
 
                     let mut matches = cursor.matches(&query, tree.root_node(), src.as_bytes());
 
+                    let mut map: HashMap<String, Vec<String>> = HashMap::new();
+
                     while let Some(m) = matches.next() {
                         for capture in m.captures {
                             let capture_name = &query.capture_names()[capture.index as usize];
                             if *capture_name == "callee" 
                                 && let Ok(callee) = capture.node.utf8_text(src.as_bytes()) {
-                                    // Safely handle calls outside functions
                                     if let Some(enclosing_fn) = find_enclosing_fn(capture.node) 
                                         && let Some(caller_name) = find_caller_name(enclosing_fn, src.as_bytes()) {
-                                            println!("{caller_name} [Range: {} - {}] called: {callee}",
-                                                enclosing_fn.range().start_point, enclosing_fn.range().end_point);
+                                            map.entry(caller_name.to_string())
+                                                .or_default()
+                                                .push(callee.to_string());
                                     }
 
                                 }
                         }
+                    }
+
+                    for (caller, callees) in map {
+                        println!("{caller} calls:");
+                        for callee in callees {
+                            print!("{callee} ");
+                        }
+                        println!("\n");
                     }
                 }
     }
@@ -68,14 +80,11 @@ fn find_caller_name<'a>(func_def_node: Node<'a>, src: &'a [u8]) -> Option<&'a st
             return n.utf8_text(src).ok();
         }
 
-        // First attempt field-based traversal
         if let Some(child) = n.child_by_field_name("declarator") {
             n = child;
         } else if let Some(child) = n.named_child(0) {
-            // Fall back to first named child for wrapper nodes (e.g. parenthesized declarators)
             n = child;
         } else {
-            // Break loop safely if terminal node reached without finding identifier
             break;
         }
     }

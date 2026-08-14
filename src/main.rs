@@ -1,8 +1,10 @@
 use std::collections::HashMap;
 
-use tree_sitter::{Node, Parser, Query,
+use tree_sitter::{Parser, Query,
     QueryCursor, StreamingIterator};
 use walkdir::WalkDir;
+
+pub mod enclosing_fn_extractor;
 
 fn main() {
     let mut c_parser = Parser::new();
@@ -40,8 +42,8 @@ fn main() {
                             let capture_name = &query.capture_names()[capture.index as usize];
                             if *capture_name == "callee" 
                                 && let Ok(callee) = capture.node.utf8_text(src.as_bytes()) {
-                                    if let Some(enclosing_fn) = find_enclosing_fn(capture.node) 
-                                        && let Some(caller_name) = find_caller_name(enclosing_fn, src.as_bytes()) {
+                                    if let Some(enclosing_fn) = enclosing_fn_extractor::find_enclosing_fn(capture.node) 
+                                        && let Some(caller_name) = enclosing_fn_extractor::find_caller_name(enclosing_fn, src.as_bytes()) {
                                             map.entry(caller_name.to_string())
                                                 .or_default()
                                                 .push(callee.to_string());
@@ -62,32 +64,3 @@ fn main() {
     }
 }
 
-fn find_enclosing_fn<'a>(mut node: Node<'a>) -> Option<Node<'a>> {
-    while let Some(parent) = node.parent() {
-        if parent.kind() == "function_definition" {
-            return Some(parent);
-        }
-        node = parent;
-    }
-    None
-}
-
-fn find_caller_name<'a>(func_def_node: Node<'a>, src: &'a [u8]) -> Option<&'a str> {
-    let mut n = func_def_node.child_by_field_name("declarator")?;
-
-    loop {
-        if n.kind() == "identifier" {
-            return n.utf8_text(src).ok();
-        }
-
-        if let Some(child) = n.child_by_field_name("declarator") {
-            n = child;
-        } else if let Some(child) = n.named_child(0) {
-            n = child;
-        } else {
-            break;
-        }
-    }
-
-    None
-}

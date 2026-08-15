@@ -25,6 +25,7 @@ fn main() {
         if let name = entry.path().display().to_string()
             && name.ends_with(".c")
         {
+            println!("{name}:\n==================================");
             let src = std::fs::read_to_string(name).expect("Error opening C file");
             let tree = c_parser
                 .parse(&src, None)

@@ -1,10 +1,7 @@
-use std::collections::HashMap;
-
-use tree_sitter::{Parser, Query,
-    QueryCursor, StreamingIterator};
+use tree_sitter::{Parser, Query, QueryCursor};
 use walkdir::WalkDir;
 
-pub mod enclosing_fn_extractor;
+mod get_captures;
 
 fn main() {
     let mut c_parser = Parser::new();
@@ -21,46 +18,27 @@ fn main() {
             (field_expression field: (field_identifier) @callee)
         ])
     ";
+    let query = Query::new(&language, query_str).unwrap();
+    let mut cursor = QueryCursor::new();
 
-    let dir = WalkDir::new(".").into_iter().filter_map(|e| e.ok());
-    for entry in dir {
+    for entry in WalkDir::new(".").into_iter().filter_map(|e| e.ok()) {
         if let name = entry.path().display().to_string()
-            && !name.starts_with("./.")
-                && !name.starts_with("./target")
-                && name.ends_with(".c") {
-                    let src = std::fs::read_to_string(name).expect("Error opening C file");
-                    let tree = c_parser.parse(&src, None).unwrap();
-                    let query = Query::new(&language, query_str).unwrap();
-                    let mut cursor = QueryCursor::new();
+            && name.ends_with(".c")
+        {
+            let src = std::fs::read_to_string(name).expect("Error opening C file");
+            let tree = c_parser
+                .parse(&src, None)
+                .expect("Error parsing the C code");
 
-                    let mut matches = cursor.matches(&query, tree.root_node(), src.as_bytes());
+            let map = get_captures::get_name_map(&src, &tree, &mut cursor, &query);
 
-                    let mut map: HashMap<String, Vec<String>> = HashMap::new();
-
-                    while let Some(m) = matches.next() {
-                        for capture in m.captures {
-                            let capture_name = &query.capture_names()[capture.index as usize];
-                            if *capture_name == "callee" 
-                                && let Ok(callee) = capture.node.utf8_text(src.as_bytes()) {
-                                    if let Some(enclosing_fn) = enclosing_fn_extractor::find_enclosing_fn(capture.node) 
-                                        && let Some(caller_name) = enclosing_fn_extractor::find_caller_name(enclosing_fn, src.as_bytes()) {
-                                            map.entry(caller_name.to_string())
-                                                .or_default()
-                                                .push(callee.to_string());
-                                    }
-
-                                }
-                        }
-                    }
-
-                    for (caller, callees) in map {
-                        println!("{caller} calls:");
-                        for callee in callees {
-                            print!("{callee} ");
-                        }
-                        println!("\n");
-                    }
+            for (caller, callees) in map {
+                println!("{caller} calls:");
+                for callee in callees {
+                    print!("{callee} ");
                 }
+                println!("\n");
+            }
+        }
     }
 }
-

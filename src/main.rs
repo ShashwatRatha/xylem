@@ -1,5 +1,5 @@
 use tree_sitter::{Parser, Query, QueryCursor};
-use walkdir::WalkDir;
+use ignore::Walk;
 
 mod get_captures;
 
@@ -21,7 +21,7 @@ fn main() {
     let query = Query::new(&language, query_str).unwrap();
     let mut cursor = QueryCursor::new();
 
-    for entry in WalkDir::new(".").into_iter().filter_map(|e| e.ok()) {
+    for entry in Walk::new(".").into_iter().filter_map(|e| e.ok()) {
         if let name = entry.path().display().to_string()
             && name.ends_with(".c")
         {

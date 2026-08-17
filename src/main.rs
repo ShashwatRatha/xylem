@@ -11,13 +11,20 @@ fn main() {
         .set_language(&language)
         .expect("Failed loading C lang");
 
-    let query_str = "
-    (call_expression
-        function: [
-            (identifier) @callee
-            (field_expression field: (field_identifier) @callee)
-        ])
-    ";
+    let query_str = r#"
+(function_definition
+  declarator: [
+    (function_declarator
+      declarator: (identifier) @function.name
+      parameters: (parameter_list) @function.args)
+    (pointer_declarator
+      declarator: (function_declarator
+        declarator: (identifier) @function.name
+        parameters: (parameter_list) @function.args))
+  ]
+  body: (compound_statement) @function.body
+) @function.def
+"#;
     let query = Query::new(&language, query_str).unwrap();
     let mut cursor = QueryCursor::new();
 
@@ -31,15 +38,7 @@ fn main() {
                 .parse(&src, None)
                 .expect("Error parsing the C code");
 
-            let map = get_captures::get_name_map(&src, &tree, &mut cursor, &query);
-
-            for (caller, callees) in map {
-                println!("{caller} calls:");
-                for callee in callees {
-                    print!("{callee} ");
-                }
-                println!("\n");
-            }
+            get_captures::get_name_map(&src, &tree, &mut cursor, &query);
         }
     }
 }

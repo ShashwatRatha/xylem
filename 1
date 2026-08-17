@@ -1,0 +1,178 @@
+warning: function `find_enclosing_fn` is never used
+ --> src/get_captures/enclosing_fn_extractor.rs:3:8
+  |
+3 | pub fn find_enclosing_fn<'a>(mut node: Node<'a>) -> Option<Node<'a>> {
+  |        ^^^^^^^^^^^^^^^^^
+  |
+  = note: `#[warn(dead_code)]` (part of `#[warn(unused)]`) on by default
+
+warning: function `find_caller_name` is never used
+  --> src/get_captures/enclosing_fn_extractor.rs:13:8
+   |
+13 | pub fn find_caller_name<'a>(func_def_node: Node<'a>, src: &'a [u8]) -> Option<&'a str> {
+   |        ^^^^^^^^^^^^^^^^
+
+warning: function `find_enclosing_fn` is never used
+ --> src/get_captures/enclosing_fn_extractor.rs:3:8
+  |
+3 | pub fn find_enclosing_fn<'a>(mut node: Node<'a>) -> Option<Node<'a>> {
+  |        ^^^^^^^^^^^^^^^^^
+  |
+  = note: `#[warn(dead_code)]` (part of `#[warn(unused)]`) on by default
+
+warning: function `find_caller_name` is never used
+  --> src/get_captures/enclosing_fn_extractor.rs:13:8
+   |
+13 | pub fn find_caller_name<'a>(func_def_node: Node<'a>, src: &'a [u8]) -> Option<&'a str> {
+   |        ^^^^^^^^^^^^^^^^
+
+warning: `xylem` (bin "xylem") generated 2 warnings
+    Finished `dev` profile [unoptimized + debuginfo] target(s) in 0.03s
+warning: `xylem` (bin "xylem") generated 2 warnings
+    Finished `dev` profile [unoptimized + debuginfo] target(s) in 0.03s
+     Running `target/debug/xylem`
+     Running `target/debug/xylem`
+
+thread 'main' (155586) panicked at src/main.rs:19:50:
+called `Result::unwrap()` on an `Err` value: QueryError { row: 3, column: 14, offset: 79, message: "        body: )\n              ^", kind: Syntax }
+stack backtrace:
+
+thread 'main' (155586) panicked at src/main.rs:19:50:
+called `Result::unwrap()` on an `Err` value: QueryError { row: 3, column: 14, offset: 79, message: "        body: )\n              ^", kind: Syntax }
+stack backtrace:
+   0:     0x5641f7c0afb8 - std[1e3c4ec04c5261a9]::backtrace_rs::backtrace::libunwind::trace
+                               at /rustc/8bab26f4f68e0e26f0bb7960be334d5b520ea452/library/std/src/../../backtrace/src/backtrace/libunwind.rs:117:9
+   1:     0x5641f7c0afb8 - std   0:     0x5641f7c0afb8 - std[1e3c4ec04c5261a9]::backtrace_rs::backtrace::libunwind::trace
+                               at /rustc/8bab26f4f68e0e26f0bb7960be334d5b520ea452/library/std/src/../../backtrace/src/backtrace/libunwind.rs:117:9
+   1:     0x5641f7c0afb8 - std[1e3c4ec04c5261a9]::backtrace_rs::backtrace::trace_unsynchronized::<std[1e3c4ec04c5261a9]::sys::backtrace::_print_fmt::{closure#1}>
+     [1e3c4ec04c5261a9]::backtrace_rs::backtrace::trace_unsynchronized::<std[1e3c4ec04c5261a9]::sys::backtrace::_print_fmt::{closure#1}>
+                                        at /rustc/8bab26f4f68e0e26f0bb7960be334d5b520ea452/library/std/src/../../backtrace/src/backtrace/mod.rs:                 at /rustc/8bab26f4f68e0e26f0bb7960be334d5b520ea452/library/std/src/../../backtrace/src/backtrace/mod.rs:66:14
+ 66:14
+   2:      2:     0x5641f7c0afb8 - std[1e3c4ec04c5261a9]::sys 0x5641f7c0afb8 - std[1e3c4ec04c5261a9]::sys::backtrace::_print_fmt
+     ::backtrace::_print_fmt
+                                       at /rustc/8bab26f4f68e0e26f0bb7960be334d5b520ea452/library/std/src/sys/backtrace.rs                  at /rustc/8bab26f4f68e0e26f0bb7960be334d5b520ea452/library/std/src/sys/backtrace.rs:74:9
+:74:9
+   3:     0x   3:     0x5641f7c0afb8 - <<std[1e3c4ec04c5261a95641f7c0afb8 - <<std[1e3c4ec04c5261a9]::sys::backtrace::BacktraceLock]::sys::backtrace::BacktraceLock>::print::DisplayBacktrace as >::print::DisplayBacktrace as core[37f591cfbe66b0b1]::fmt::Displaycore[37f591cfbe66b0b1]::fmt::Display>::fmt
+   >::fmt
+                                             at /rustc/8bab26f4f68e0e26f0bb7960be334d5b520ea452/library/std/src/sys/backtrace.rs:44:              at /rustc/8bab26f4f68e0e26f0bb7960be334d5b520ea452/library/std/src/sys/backtrace.rs:44:26
+26
+   4:     0x5641f7c1e08a - <core   4:     0x5641f7c1e08a - <core[37f591cfbe66b0b1]::fmt::rt::Argument>::fmt
+     [37f591cfbe66b0b1]::fmt::rt::Argument>::fmt
+                                       at /rustc/8bab26f4f68e0e26f0bb7960be334d5b520ea452/library/core/src/fmt/rt.rs:                  at /rustc/8bab26f4f68e0e26f0bb7960be334d5b520ea452/library/core/src/fmt/rt.rs:152:76
+   5:     0x5641f7c1e08a - core[37f591cfbe66b0b1]::fmt::write
+152:76
+   5:     0x5641f7c1e08a - core[37f591cfbe66b0b1]::fmt::write
+   6:     0x5641f7c0f342 - std[   6:     0x5641f7c0f342 - std[1e3c4ec04c5261a9]::io::default_write_fmt::<std[1e3c4ec04c5261a91e3c4ec04c5261a9]::io::default_write_fmt::<std[1e3c4ec04c5261a9]::sys::stdio::unix::Stderr>
+ ]::sys::stdio::unix::Stderr>
+                                               at /rustc/8bab26f4f68e0e26f0bb7960be334d5b520ea452/library/std/src/io/mod.rs:622:11
+              at /rustc/8bab26f4f68e0e26f0bb7960be334d5b520ea452/library/std/src/io/mod.rs:622:11
+   7:      7:     0x5641f7c0f342 - <std[1e3c4ec04c5261a9  0x5641f7c0f342 - <std[1e3c4ec04c5261a9]::sys::stdio::unix::Stderr as std[1e3c4ec04c5261a9]::io::Write>::write_fmt
+ ]::sys::stdio::unix::Stderr as std[1e3c4ec04c5261a9]::io::Write>::write_fmt
+                                         at /rustc/8bab26f4f68e0e26f0bb7960be334d5b520ea452/library/std/src/io/mod.rs:                    at /rustc/8bab26f4f68e0e26f0bb7960be334d5b520ea452/library/std/src/io/mod.rs:1977:13
+1977:13
+   8:     0x5641f7bf21f6   8:     0x5641f7bf21f6 - <std[1e3c4ec04c5261a9]::sys - <std[1e3c4ec04c5261a9]::sys::backtrace::BacktraceLock>::::backtrace::BacktraceLock>::print
+     print
+                                       at /rustc/8bab26f4f68e0e26f0bb7960be334d5b520ea452/library/std/src/sys/backtrace.rs                  at /rustc/8bab26f4f68e0e26f0bb7960be334d5b520ea452/library/std/src/sys/backtrace.rs:47:9
+:47:9
+   9:      9:     0x5641f7bf21f6 - std[  0x5641f7bf21f6 - std[1e3c4ec04c5261a9]::panicking::default_hook::{1e3c4ec04c5261a9]::panicking::default_hook::{closure#0}
+  closure#0}
+                                      at /rustc/8bab26f4f68e0e26f0bb7960be334d5b520ea452/library/std/src/panicking.rs                      at /rustc/8bab26f4f68e0e26f0bb7960be334d5b520ea452/library/std/src/panicking.rs:292:27
+:292:27
+  10:     0x5641f7c04051 -   10:     0x5641f7c04051 - std[1e3c4ec04c5261a9]::panicking::default_hookstd[1e3c4ec04c5261a9]::panicking::default_hook
+       
+                                       at /rustc/8bab26f4f68e0e26f0bb7960be334d5b520ea452/library/std/src/panicking.rs:319                at /rustc/8bab26f4f68e0e26f0bb7960be334d5b520ea452/library/std/src/panicking.rs:319:9
+:9
+  11:     0x  11:     0x5641f7c0420b - std[1e3c4ec04c5261a9]::panicking::panic_with_hook5641f7c0420b - std[1e3c4ec04c5261a9]::panicking::panic_with_hook
+      
+                                      at /rustc/8bab26f4f68e0e26f0bb7960be334d5b520ea452/library/std/src/panicking.rs                  at /rustc/8bab26f4f68e0e26f0bb7960be334d5b520ea452/library/std/src/panicking.rs:825:13
+:825:13
+  12:     0x5641f7bf22b2  12:     0x5641f7bf22b2 - std[1e3c4ec04c5261a9]::panicking - std[1e3c4ec04c5261a9]::panicking::panic_handler::{closure#0}::panic_handler::{closure#0}
+        
+                                      at /rustc/8bab26f4f68e0e26f0bb7960be334d5b520ea452/library/std/src/panicking.rs:698                at /rustc/8bab26f4f68e0e26f0bb7960be334d5b520ea452/library/std/src/panicking.rs:698:13
+:13
+  13:     0x5641f7be7469 - std[1e3c4ec04c5261a9  13:     0x5641f7be7469 - std[1e3c4ec04c5261a9]::sys::backtrace::__rust_end_short_backtrace::<]::sys::backtrace::__rust_end_short_backtrace::<std[1e3c4ec04c5261a9]::panicking::panic_handlerstd[1e3c4ec04c5261a9]::panicking::panic_handler::{closure#0}, !>
+ ::{closure#0}, !>
+                                          at                    at /rustc/8bab26f4f68e0e26f0bb7960be334d5b520ea452/library/std/src/sys/backtrace.rs:182:18
+/rustc/8bab26f4f68e0e26f0bb7960be334d5b520ea452/library/std/src/sys/backtrace.rs:182:18
+  14:       14:     0x5641f7bf2fbd - __rustc[6ef78fba13ac776c]::rust_begin_unwind
+                               at /rustc/8bab26f4f68e0e26f0bb7960be334d5b520ea452/library/std/src/panicking.rs:689:5
+0x5641f7bf2fbd - __rustc[6ef78fba13ac776c]::rust_begin_unwind
+                               at /rustc/8bab26f4f68e0e26f0bb7960be334d5b520ea452/library/std/src/panicking.rs:689:5
+  15:     0x5641f7c1e8cc - core[37f591cfbe66b0b1]::panicking::panic_fmt
+     15:     0x5641f7c1e8cc - core[37f591cfbe66b0b1]::panicking::panic_fmt
+                                       at /rustc/8bab26f4f68e0e26f0bb7960be334d5b520ea452/library/core/src/panicking.rs                    at /rustc/8bab26f4f68e0e26f0bb7960be334d5b520ea452/library/core/src/panicking.rs:80:14
+:80:14
+    16:     0x5641f7c1e642 - 16:     0x5641f7c1e642 - core[37f591cfbe66b0b1]::result::unwrap_failed
+core[37f591cfbe66b0b1]::result::unwrap_failed
+                                                at /rustc/8bab26f4f68e0e26f0bb7960be334d5b520ea452/library/core/src/result.rs:1867:5              at /rustc/8bab26f4f68e0e26f0bb7960be334d5b520ea452/library/core/src/result.rs:1867:5
+
+  17:     0x  17:     0x5641f789366d - <core[37f591cfbe66b0b1]::result::5641f789366d - <core[37f591cfbe66b0b1]::result::Result<tree_sitter[203632e513039579]Result<tree_sitter[203632e513039579]::Query, tree_sitter[203632e513039579::Query, tree_sitter[203632e513039579]::QueryError>>::unwrap]::QueryError>>::unwrap
+      
+                                          at /home/shashwat/.rustup/toolchains/stable-x86_64-unknown-linux-gnu/lib/rustlib/src/rust/library/core/src/result.rs:1233:23              at /home/shashwat/.rustup/toolchains/stable-x86_64-unknown-linux-gnu/lib/rustlib/src/rust/library/core/src/result.rs:1233:23
+  18: 
+  18:     0x5641f789366d - xylem[4a267540cb6d2929    0x5641f789366d - xylem[4a267540cb6d2929]::main
+   ]::main
+                                             at /home/shashwat/Projects/xylem/src/main.rs:19:50              at /home/shashwat/Projects/xylem/src/main.rs:19:50
+
+  19:     0x  19:     0x5641f788b6db - <fn() as core[37f591cfbe66b0b1]5641f788b6db - <fn() as core[37f591cfbe66b0b1]::ops::function::FnOnce<::ops::function::FnOnce<()>>::call_once
+  ()>>::call_once
+                                               at /home/shashwat/.rustup/toolchains/stable-x86_64-unknown-linux-gnu/lib/rustlib/src/rust/library/core/src/ops/function.rs:250:5             at /home/shashwat/.rustup/toolchains/stable-x86_64-unknown-linux-gnu/lib/rustlib/src/rust/library/core/src/ops/function.rs:250:5
+
+  20:     0x  20:     0x5641f789018e - std[1e3c4ec04c5261a9]::sys5641f789018e - std[1e3c4ec04c5261a9]::sys::backtrace::__rust_begin_short_backtrace::<fn(::backtrace::__rust_begin_short_backtrace::<fn(), ()>
+  ), ()>
+                                             at /home/shashwat/.rustup/toolchains/stable-x86_64-unknown-linux-gnu/lib/rustlib/src/rust/library/std/src/sys/backtrace.rs:166:               at /home/shashwat/.rustup/toolchains/stable-x86_64-unknown-linux-gnu/lib/rustlib/src/rust/library/std/src/sys/backtrace.rs:166:18
+18
+  21:     0x  21:     0x5641f7893cb1 - std[1e3c4ec04c5261a9]::rt::lang_start5641f7893cb1 - std[1e3c4ec04c5261a9]::rt::lang_start::<()>::{closure#::<()>::{closure#0}
+      0}
+                                       at /home/shashwat/.rustup/toolchains/stable-x86_64-unknown-linux-gnu/lib/rustlib/src/rust/library/std/src/rt.rs                 at /home/shashwat/.rustup/toolchains/stable-x86_64-unknown-linux-gnu/lib/rustlib/src/rust/library/std/src/rt.rs:206:18
+:206:18
+  22:     0x  22:     0x5641f7c034f7 - <&dyn core[37f591cfbe66b0b15641f7c034f7 - <&dyn core[37f591cfbe66b0b1]::ops::function::Fn]::ops::function::Fn<(), Output = i32<(), Output = i32> + core[37f591cfbe66b0b1]::> + core[37f591cfbe66b0b1]::panic::unwind_safe::RefUnwindSafe + panic::unwind_safe::RefUnwindSafe + core[37f591cfbe66b0b1]::marker::core[37f591cfbe66b0b1]::marker::Sync as core[37f591cfbe66b0b1]::opsSync as core[37f591cfbe66b0b1]::ops::function::FnOnce<()>::function::FnOnce<()>>::call_once
+     >::call_once
+                                       at /rustc/8bab26f4f68e0e26f0bb7960be334d5b520ea452/library/core/src/ops/function.rs                  at /rustc/8bab26f4f68e0e26f0bb7960be334d5b520ea452/library/core/src/ops/function.rs:287:21
+:287:21
+  23:       23:     0x5641f7c034f7 - std[1e3c4ec04c5261a90x5641f7c034f7 - std[1e3c4ec04c5261a9]::panicking::catch_unwind::do_call]::panicking::catch_unwind::do_call::<&dyn core[37f591cfbe66b0b1]::ops::function::Fn<(), ::<&dyn core[37f591cfbe66b0b1]::ops::function::Fn<(), Output = i32> + core[Output = i32> + core[37f591cfbe66b0b1]::panic::unwind_safe::37f591cfbe66b0b1]::panic::unwind_safe::RefUnwindSafe + core[37f591cfbe66b0b1]RefUnwindSafe + core[37f591cfbe66b0b1]::marker::Sync, i32>::marker::Sync, i32>
+      
+                                      at /rustc/8bab26f4f68e0e26f0bb7960be334d5b520ea452/library/std/src/panicking.rs                  at /rustc/8bab26f4f68e0e26f0bb7960be334d5b520ea452/library/std/src/panicking.rs:581:40
+:581:40
+  24:      24:     0x5641f7c034f7 - std[1e3c4ec04c5261a9 0x5641f7c034f7 - std[1e3c4ec04c5261a9]::panicking::catch_unwind::<i32, &]::panicking::catch_unwind::<i32, &dyn core[37f591cfbe66b0b1]::opsdyn core[37f591cfbe66b0b1]::ops::function::Fn<(), ::function::Fn<(), Output = i32> + coreOutput = i32> + core[37f591cfbe66b0b1]::panic::unwind_safe[37f591cfbe66b0b1]::panic::unwind_safe::RefUnwindSafe + core[37f591cfbe66b0b1]::RefUnwindSafe + core[37f591cfbe66b0b1]::marker::Sync>
+ ::marker::Sync>
+                                              at /rustc/8bab26f4f68e0e26f0bb7960be334d5b520ea452/library/std/src/panicking.rs:544:               at /rustc/8bab26f4f68e0e26f0bb7960be334d5b520ea452/library/std/src/panicking.rs:544:19
+19
+  25:      25:     0x5641f7c034f7 - std[1e3c4ec04c5261a9 0x5641f7c034f7 - std[1e3c4ec04c5261a9]::panic::catch_unwind::<&dyn ]::panic::catch_unwind::<&dyn core[37f591cfbe66b0b1]::ops::function::Fncore[37f591cfbe66b0b1]::ops::function::Fn<(), Output = i32><(), Output = i32> + core[37f591cfbe66b0b1]::panic + core[37f591cfbe66b0b1]::panic::unwind_safe::RefUnwindSafe + core[37f591cfbe66b0b1]::marker::::unwind_safe::RefUnwindSafe + core[37f591cfbe66b0b1]::marker::Sync, i32>
+  Sync, i32>
+                                               at /rustc/8bab26f4f68e0e26f0bb7960be334d5b520ea452/library/std/src/panic.rs:359:14             at /rustc/8bab26f4f68e0e26f0bb7960be334d5b520ea452/library/std/src/panic.rs:359:14
+  26: 
+  26:     0x5641f7c034f7 -     0x5641f7c034f7 - std[1e3c4ec04c5261a9]::rt::std[1e3c4ec04c5261a9]::rt::lang_start_internal::{closure#0}
+    lang_start_internal::{closure#0}
+                                        at /rustc/8bab26f4f68e0e26f0bb7960be334d5b520ea452/library/std/src/rt.rs                  at /rustc/8bab26f4f68e0e26f0bb7960be334d5b520ea452/library/std/src/rt.rs:175:24
+:175:24
+  27:       27:     0x5641f7c034f7 - std[1e3c4ec04c5261a9]0x5641f7c034f7 - std[1e3c4ec04c5261a9]::panicking::catch_unwind::do_call::<::panicking::catch_unwind::do_call::<std[1e3c4ec04c5261a9]::rt::std[1e3c4ec04c5261a9]::rt::lang_start_internal::{closure#0}, lang_start_internal::{closure#0}, isize>
+     isize>
+                                       at /rustc/8bab26f4f68e0e26f0bb7960be334d5b520ea452/library/std/src/panicking.rs                  at /rustc/8bab26f4f68e0e26f0bb7960be334d5b520ea452/library/std/src/panicking.rs:581:40
+:581:40
+  28:      28:     0x5641f7c034f7 - std[1e3c4ec04c5261a9]::panicking:: 0x5641f7c034f7 - std[1e3c4ec04c5261a9]::panicking::catch_unwind::<isize, std[catch_unwind::<isize, std[1e3c4ec04c5261a9]::rt::lang_start_internal::{closure1e3c4ec04c5261a9]::rt::lang_start_internal::{closure#0}>
+ #0}>
+                                               at /rustc/8bab26f4f68e0e26f0bb7960be334d5b520ea452/library/std/src/panicking.rs:544:19              at /rustc/8bab26f4f68e0e26f0bb7960be334d5b520ea452/library/std/src/panicking.rs:544:19
+  29:  
+  29:     0x5641f7c034f7 - std   0x5641f7c034f7 - std[1e3c4ec04c5261a9]::panic::[1e3c4ec04c5261a9]::panic::catch_unwind::<std[1e3c4ec04c5261a9catch_unwind::<std[1e3c4ec04c5261a9]::rt::lang_start_internal::{closure]::rt::lang_start_internal::{closure#0}, isize>
+  #0}, isize>
+                                       at                      at /rustc/8bab26f4f68e0e26f0bb7960be334d5b520ea452/library/std/src/panic.rs:359:14
+/rustc/8bab26f4f68e0e26f0bb7960be334d5b520ea452/library/std/src/panic.rs:359:14
+  30:       30:     0x5641f7c034f7 - std[1e3c4ec04c5261a9]0x5641f7c034f7 - std[1e3c4ec04c5261a9]::rt::lang_start_internal
+                 ::rt::lang_start_internal
+                               at /rustc/8bab26f4f68e0e26f0bb7960be334d5b520ea452/library/std/src/rt.rs:171:5              at /rustc/8bab26f4f68e0e26f0bb7960be334d5b520ea452/library/std/src/rt.rs:171:5
+
+  31:     31:     0x5641f7893c97 - std[  0x5641f7893c97 - std[1e3c4ec04c5261a9]::rt::lang_start::1e3c4ec04c5261a9]::rt::lang_start::<()>
+         <()>
+                                       at /home/shashwat/.rustup/toolchains/stable-x86_64-unknown-linux-gnu/lib/rustlib/src/rust/library/std/src/rt.rs:205:5              at /home/shashwat/.rustup/toolchains/stable-x86_64-unknown-linux-gnu/lib/rustlib/src/rust/library/std/src/rt.rs:205:5
+
+  32:     0x5641f7893c5e -   32:     0x5641f7893c5e - main
+main
+  33:       33:     0x7fb965c27781 - <unknown>
+0x7fb965c27781 - <unknown>
+  34:   34:     0x7fb965c278b9 -     0x7fb965c278b9 - __libc_start_main
+__libc_start_main
+  35:    35:     0x5641f788abc5 -    0x5641f788abc5 - _start
+  _start
+  36:      36:                      0x    0x0 - <unknown>
+0 - <unknown>

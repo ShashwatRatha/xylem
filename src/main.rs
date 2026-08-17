@@ -12,23 +12,24 @@ fn main() {
         .expect("Failed loading C lang");
 
     let query_str = r#"
-(function_definition
-  declarator: [
-    (function_declarator
-      declarator: (identifier) @function.name
-      parameters: (parameter_list) @function.args)
-    (pointer_declarator
-      declarator: (function_declarator
-        declarator: (identifier) @function.name
-        parameters: (parameter_list) @function.args))
-  ]
-  body: (compound_statement) @function.body
-) @function.def
+    (function_definition
+        declarator: [
+            (function_declarator
+                declarator: (identifier) @function.name
+                parameters: (parameter_list) @function.args)
+            (pointer_declarator
+                declarator: (function_declarator
+                    declarator: (identifier) @function.name
+                    parameters: (parameter_list) @function.args))
+        ]
+        body: (compound_statement) @function.body
+    ) @function.def
 "#;
+
     let query = Query::new(&language, query_str).unwrap();
     let mut cursor = QueryCursor::new();
 
-    for entry in Walk::new(".").into_iter().filter_map(|e| e.ok()) {
+    for entry in Walk::new(".").filter_map(|e| e.ok()) {
         if let name = entry.path().display().to_string()
             && name.ends_with(".c")
         {
@@ -38,7 +39,7 @@ fn main() {
                 .parse(&src, None)
                 .expect("Error parsing the C code");
 
-            get_captures::get_name_map(&src, &tree, &mut cursor, &query);
+            get_captures::print_function_map(&src, &tree, &mut cursor, &query);
         }
     }
 }

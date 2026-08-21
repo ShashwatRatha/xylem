@@ -1,15 +1,12 @@
-use std::str::Utf8Error;
+pub mod defs;
 
-// use std::collections::HashMap;
-use tree_sitter::{Node, Query, QueryCursor, Range, StreamingIterator, Tree};
+use tree_sitter::{Query, QueryCursor, Range, StreamingIterator, Tree};
+use self::defs::FuncDef;
 
-// use self::defs::FuncDef;
-
-mod defs;
-
-pub fn print_function_map(src: &str, tree: &Tree, cursor: &mut QueryCursor, query: &Query,
-    file: &str) {
+pub fn enumeration_pass(src: &str, tree: &Tree, cursor: &mut QueryCursor, query: &Query,
+    file: &str) -> Vec<FuncDef>{
     let mut matches = cursor.matches(query, tree.root_node(), src.as_bytes());
+    let mut funcs: Vec<FuncDef> = Vec::new();
     
     while let Some(m) = matches.next() {
         let mut name: Option<&str> = None;
@@ -32,9 +29,9 @@ pub fn print_function_map(src: &str, tree: &Tree, cursor: &mut QueryCursor, quer
         }
 
         if let (Some(name), Some(rng)) = (name, range) {
-            // let func = FuncDef::new(name, file, rng.start_byte, rng.end_byte,
-                // storage.contains("static"));
-            println!("{name} {} - {} {is_static}", rng.start_point, rng.end_point);
+            funcs.push(FuncDef::new(name, file, rng.start_byte, rng.end_byte, is_static));
         }
     }
+
+    funcs
 }

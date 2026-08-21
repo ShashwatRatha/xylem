@@ -1,9 +1,5 @@
 use std::collections::HashSet;
-
-use tree_sitter::Point;
-
-// FuncDef:
-//  name: name of the function 
+use std::fmt::Display;
 
 pub struct FuncDef {
     name: String,
@@ -14,7 +10,8 @@ pub struct FuncDef {
 }
 
 impl FuncDef {
-    pub fn new(name: &str, file: &str, start: usize, end: usize, is_static: bool) -> FuncDef {
+    pub fn new(name: &str, file: &str, start: usize, end: usize,
+        is_static: bool) -> FuncDef {
         FuncDef { 
             name: String::from(name),
             file: String::from(file),
